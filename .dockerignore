@@ -1,0 +1,22 @@
+# Dependency directories
+node_modules
+dist
+
+# Environment files
+.env
+.env.*
+
+# Git & IDE
+.git
+.gitignore
+.vscode
+readme.md
+.prettierrc
+
+# Docker configs
+Dockerfile*
+compose.*.yaml
+docker-compose.*.yaml
+
+# Misc
+*.log

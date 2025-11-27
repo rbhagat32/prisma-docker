@@ -1,0 +1,53 @@
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:16
+    environment:
+      POSTGRES_USER: raghav
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: default
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+
+  backend:
+    container_name: backend
+    build:
+      context: ./
+      dockerfile: Dockerfile.dev
+    depends_on:
+      - postgres
+    ports:
+      - "4000:4000"
+    env_file:
+      - .env
+    volumes:
+      - ./prisma/migrations:/app/prisma/migrations
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
+          ignore:
+            - node_modules/
+            - prisma/migrations/
+        - action: rebuild
+          path: package.json
+        - action: rebuild
+          path: .env
+        - action: rebuild
+          path: prisma/schema.prisma
+
+  prisma-studio:
+    image: node:20-alpine
+    container_name: prisma-studio
+    working_dir: /app
+    volumes:
+      - ./:/app
+    command: sh -c "npx prisma studio"
+    ports:
+      - "51212:51212"
+    depends_on:
+      - backend
+
+volumes:
+  pg-data:
