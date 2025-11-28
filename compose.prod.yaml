@@ -12,28 +12,16 @@ services:
   backend:
     container_name: backend
     build:
-      context: ./
+      context: ./backend
       dockerfile: Dockerfile.prod
     depends_on:
       - postgres
     ports:
       - "4000:4000"
     env_file:
-      - .env
+      - ./backend/.env
     volumes:
-      - ./prisma/migrations:/app/prisma/migrations
-
-  prisma-studio:
-    image: node:20-alpine
-    container_name: prisma-studio
-    working_dir: /app
-    volumes:
-      - ./:/app
-    command: sh -c "npx prisma studio"
-    ports:
-      - "51212:51212"
-    depends_on:
-      - backend
+      - ./backend/prisma/migrations:/app/prisma/migrations
 
 volumes:
   pg-data:

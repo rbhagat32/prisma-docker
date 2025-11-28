@@ -12,37 +12,37 @@ services:
   backend:
     container_name: backend
     build:
-      context: ./
+      context: ./backend
       dockerfile: Dockerfile.dev
     depends_on:
       - postgres
     ports:
       - "4000:4000"
     env_file:
-      - .env
+      - ./backend/.env
     volumes:
-      - ./prisma/migrations:/app/prisma/migrations
+      - ./backend/prisma/migrations:/app/prisma/migrations
     develop:
       watch:
         - action: sync
-          path: .
+          path: ./backend
           target: /app
           ignore:
             - node_modules/
             - prisma/migrations/
         - action: rebuild
-          path: package.json
+          path: ./backend/package.json
         - action: rebuild
-          path: .env
+          path: ./backend/.env
         - action: rebuild
-          path: prisma/schema.prisma
+          path: ./backend/prisma/schema.prisma
 
   prisma-studio:
     image: node:20-alpine
     container_name: prisma-studio
     working_dir: /app
     volumes:
-      - ./:/app
+      - ./backend:/app
     command: sh -c "npx prisma studio"
     ports:
       - "51212:51212"
