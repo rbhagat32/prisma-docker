@@ -15,7 +15,7 @@ export const ErrorHandlerMiddleware = (
   err: ErrorHandler,
   _req: Request,
   res: Response,
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-varss
   _next: NextFunction
 ) => {
   err.statusCode ||= 500;
