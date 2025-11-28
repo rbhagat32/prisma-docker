@@ -1,4 +1,4 @@
-interface IUser {
+export interface IUser {
   id: string;
   name: string;
   email: string;
@@ -7,7 +7,7 @@ interface IUser {
   createdAt: Date;
 }
 
-interface IPost {
+export interface IPost {
   id: string;
   title: string;
   content: string;
