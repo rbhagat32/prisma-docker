@@ -24,7 +24,7 @@ app.use(
 app.use("/api/user", UserRouter);
 app.use("/api/post", PostRouter);
 
-// custom error handler
+// error handler
 app.use(ErrorHandlerMiddleware);
 
 const PORT = Number(process.env.PORT) || 4000;
